@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de aprendizaje · comunicación accesible</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f2f0f5;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            color: #1e1a2b;
+        }
+
+        .landing-card {
+            max-width: 1000px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 2.5rem;
+            box-shadow: 0 30px 60px -15px rgba(58, 23, 78, 0.3);
+            padding: 3rem 2.5rem;
+            border: 2px solid #e0d2f0;
+        }
+
+        .accesibility-badge {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: #f0e8fc;
+            color: #442b66;
+            padding: 0.4rem 1.2rem;
+            border-radius: 3rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border: 1px solid #cbb7e6;
+            letter-spacing: 0.02em;
+        }
+
+        .badge-icon {
+            background: #b185db;
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: none;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: #1a0e2b;
+            margin-bottom: 1.2rem;
+            letter-spacing: -0.02em;
+        }
+
+        .highlight {
+            color: #7a4eb3;
+            border-bottom: 4px solid #d7c2fc;
+            display: inline-block;
+            padding-bottom: 0.1rem;
+        }
+
+        .subhead {
+            font-size: 1.2rem;
+            color: #46375a;
+            max-width: 700px;
+            margin-bottom: 2.5rem;
+            background: #fbf8ff;
+            padding: 1.2rem 1.8rem;
+            border-radius: 2rem;
+            border: 1px solid #dacaf0;
+            line-height: 1.5;
+            font-weight: 450;
+            box-shadow: inset 0 1px 6px rgba(255,255,255,0.8);
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 3rem 0 2.5rem;
+        }
+
+        .module-card {
+            background: #faf7ff;
+            border-radius: 2rem;
+            padding: 2rem 1.8rem 1.8rem 1.8rem;
+            border: 2px solid #e0d0f5;
+            transition: transform 0.1s, box-shadow 0.2s, border-color 0.1s;
+            box-shadow: 0 12px 25px -12px rgba(80, 40, 120, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .module-card:hover {
+            transform: translateY(-4px);
+            border-color: #b185db;
+            box-shadow: 0 20px 30px -10px #b28fda60;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-header .emoji-badge {
+            font-size: 2.5rem;
+            background: #efe3ff;
+            width: 4rem;
+            height: 4rem;
+            border-radius: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #bba3e0;
+        }
+
+        .card-header h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #2e1c47;
+            letter-spacing: -0.01em;
+        }
+
+        .card-desc {
+            font-size: 1.1rem;
+            color: #3f3153;
+            margin-bottom: 1.8rem;
+            line-height: 1.5;
+            flex: 1;
+            padding: 0 0.2rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            font-size: 1rem;
+            color: #3e2b58;
+            margin-bottom: 0.6rem;
+            background: #ffffffd9;
+            padding: 0.4rem 1rem 0.4rem 0.7rem;
+            border-radius: 2rem;
+            border: 1px solid #decdf5;
+            width: fit-content;
+        }
+
+        .feature-list li span {
+            background: #c7afe9;
+            border-radius: 50%;
+            width: 1.7rem;
+            height: 1.7rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .btn-modulo {
+            background: #2a1b3a;
+            color: white;
+            border: none;
+            border-radius: 3rem;
+            padding: 1rem 1.8rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.7rem;
+            transition: 0.1s;
+            border: 2px solid #2a1b3a;
+            margin-top: 0.5rem;
+            text-decoration: none;
+            width: 100%;
+        }
+
+        .btn-modulo:hover {
+            background: #3f2b5a;
+            border-color: #b185db;
+        }
+
+        .btn-modulo:active {
+            transform: scale(0.98);
+        }
+
+        .btn-modulo.secondary {
+            background: white;
+            color: #2a1b3a;
+            border: 2px solid #bba3e0;
+        }
+
+        .btn-modulo.secondary:hover {
+            background: #f4edff;
+            border-color: #8f5fc7;
+        }
+
+        .global-commands {
+            background: #e5d9f5;
+            border-radius: 2rem;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0 1.5rem;
+            border: 2px solid #bba3e0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+
+        .command-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .command-group kbd {
+            background: white;
+            border-radius: 0.8rem;
+            padding: 0.3rem 1rem;
+            font-family: monospace;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1f1233;
+            border: 2px solid #a481d1;
+            min-width: 2.6rem;
+            text-align: center;
+            box-shadow: 0 2px 0 #b59ad6;
+        }
+
+        .command-group span {
+            color: #322549;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .voice-note {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: #ffffffb0;
+            border-radius: 3rem;
+            padding: 0.5rem 1.5rem;
+            border: 2px solid #bba3e0;
+        }
+
+        .voice-note span {
+            font-size: 1.2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            color: #513f6e;
+            border-top: 2px dashed #cab8e6;
+            padding-top: 1.8rem;
+            font-size: 0.95rem;
+        }
+
+        .reset-hint kbd {
+            background: #f0ebf5;
+            border-radius: 0.5rem;
+            padding: 0.2rem 0.7rem;
+            border: 1px solid #bba3e0;
+            font-family: monospace;
+        }
+
+        @media (max-width: 700px) {
+            .modules-grid { grid-template-columns: 1fr; }
+            h1 { font-size: 2.2rem; }
+            .landing-card { padding: 2rem 1.5rem; }
+        }
+
+        /* pequeña utilidad para foco */
+        [tabindex="-1"]:focus-visible {
+            outline: 3px solid #9f7aea;
+        }
+    </style>
+</head>
+<body>
+    <div class="landing-card" tabindex="-1" id="landingFocus">
+        <!-- accesibilidad rápida -->
+        <div class="accesibility-badge">
+            <span class="badge-icon">🎧 navegación por voz</span>
+            <span class="badge">⬆️⬇️ → ←</span>
+            <span class="badge">🧏 compatible con lectores</span>
+        </div>
+
+        <!-- título principal -->
+        <h1>
+            <span class="highlight">Sistema de aprendizaje</span><br>de comunicación accesible
+        </h1>
+
+        <!-- mensaje inicial (simula el tono del módulo tutor) -->
+        <div class="subhead">
+            🔊 Bienvenida sonora interactiva. Explora los módulos diseñados con jerarquía clara, 
+            feedback auditivo y navegación por teclado. Todo pensado para simular asistencia en comunicación.
+        </div>
+
+        <!-- dos módulos principales -->
+        <div class="modules-grid">
+            <!-- Módulo tutor (modulo_tutor.html) -->
+            <div class="module-card" id="cardTutor">
+                <div class="card-header">
+                    <div class="emoji-badge">🎓</div>
+                    <h2>Módulo tutor</h2>
+                </div>
+                <div class="card-desc">
+                    Árbol de navegación con contenidos, submenús y una evaluación final. 
+                    Aprende conceptos mediante exploración guiada.
+                </div>
+                <ul class="feature-list">
+                    <li><span>📡</span> Fundamentos: emisor, receptor</li>
+                    <li><span>🦯</span> Asistencia y lectores</li>
+                    <li><span>💬</span> Interacción simulada</li>
+                    <li><span>✏️</span> Evaluación con voz</li>
+                </ul>
+                <a href="modulo_tutor.html" class="btn-modulo" id="goToTutor">
+                    ➜ Entrar al tutor <span style="font-size: 1.5rem;">→</span>
+                </a>
+                <div style="margin-top: 0.8rem; font-size: 0.9rem; color: #5e4a79; display: flex; align-items: center; gap: 0.4rem;">
+                    <kbd style="background:#eee; border-radius: 0.4rem; padding: 0.2rem 0.6rem;">←</kbd> retroceso · 
+                    <kbd style="background:#eee; border-radius: 0.4rem; padding: 0.2rem 0.6rem;">↑↓</kbd> navega
+                </div>
+            </div>
+
+            <!-- Módulo usuario (modulo_usuario.html) - AHORA CON RUTA CORRECTA -->
+            <div class="module-card" id="cardUser">
+                <div class="card-header">
+                    <div class="emoji-badge">👥</div>
+                    <h2>Módulo usuario</h2>
+                </div>
+                <div class="card-desc">
+                    Perfil, progreso y simulaciones de comunicación cotidiana. 
+                    Ideal para practicar interacciones sociales y seguimiento.
+                </div>
+                <ul class="feature-list">
+                    <li><span>📊</span> Panel de progreso</li>
+                    <li><span>🗣️</span> Diálogos simulados</li>
+                    <li><span>⚙️</span> Preferencias de voz</li>
+                    <li><span>📝</span> Registro de actividades</li>
+                </ul>
+                <!-- ¡¡RUTA CORREGIDA!! ahora apunta a modulo_usuario.html -->
+                <a href="modulo_usuario.html" class="btn-modulo secondary" id="goToUser">
+                    ➜ Explorar módulo usuario <span style="font-size: 1.5rem;">↗</span>
+                </a>
+                <div style="margin-top: 0.8rem; font-size: 0.9rem; color: #5e4a79;">
+                    ⚡ perfil personalizable con voz
+                </div>
+            </div>
+        </div>
+
+        <!-- comandos globales estilo 'modulo_tutor' para mantener identidad -->
+        <div class="global-commands">
+            <div class="command-group">
+                <kbd>←</kbd><kbd>→</kbd> <span>navegar entre tarjetas</span>
+            </div>
+            <div class="command-group">
+                <kbd>⏎</kbd> <span>seleccionar módulo</span>
+            </div>
+            <div class="voice-note">
+                <span>🔊</span> <span style="font-weight:500;">voz disponible en cada módulo</span>
+            </div>
+        </div>
+
+        <!-- pie con recordatorio de acceso directo y reinicio simbólico -->
+        <div class="footer-links">
+            <div class="reset-hint">
+                <kbd>↻</kbd> volver a este landing desde cualquier módulo
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <span>🔇 silenciar voz</span>
+                <span style="border-left: 2px solid #ccc; padding-left: 1rem;">🦯 accesible</span>
+            </div>
+        </div>
+
+        <!-- pequeño aviso de que ambos están disponibles -->
+        <p style="text-align:center; margin-top: 2rem; font-size:0.9rem; color:#7b64a3; background:#f4edff; padding:0.5rem 2rem; border-radius:3rem;">
+            ⚡ <strong>Módulo tutor</strong> y <strong>Módulo usuario</strong> completamente funcionales. 
+            Navegación con flechas y Enter.
+        </p>
+    </div>
+
+    <script>
+        (function() {
+            // Pequeña utilidad para emular feedback auditivo y mantener consistencia con el estilo
+            const landing = document.getElementById('landingFocus');
+            landing.focus();
+
+            // Prevenir comportamiento por defecto de flechas en la página (para que no haga scroll)
+            document.addEventListener('keydown', function(e) {
+                if (e.key.startsWith('Arrow') || e.key === 'Enter') {
+                    const tag = e.target.tagName;
+                    // Permitir comportamiento normal si es un enlace o botón nativo,
+                    // pero prevenir scroll con flechas cuando no hay inputs
+                    if (tag !== 'A' && tag !== 'BUTTON' && tag !== 'INPUT' && tag !== 'TEXTAREA') {
+                        e.preventDefault();
+                    }
+                }
+            });
+
+            // Referencias a tarjetas y enlaces
+            const cards = document.querySelectorAll('.module-card');
+            const tutorBtn = document.getElementById('goToTutor');
+            const userBtn = document.getElementById('goToUser');
+
+            // Estado de navegación con flechas
+            let focusedCardIndex = -1; // -1 significa ninguna tarjeta resaltada
+
+            // Actualizar estilo visual de la tarjeta seleccionada
+            function updateCardFocus(index) {
+                // Resetear estilos de todas las tarjetas
+                cards.forEach((c, i) => {
+                    c.style.transform = '';
+                    c.style.borderColor = '#e0d0f5';
+                    c.style.background = '#faf7ff';
+                    // Quitar atributo de foco artificial
+                    c.removeAttribute('data-focused');
+                });
+
+                if (index >= 0 && index < cards.length) {
+                    const card = cards[index];
+                    card.style.transform = 'translateX(8px) scale(1.01)';
+                    card.style.borderColor = '#b185db';
+                    card.style.background = '#f3ecff';
+                    card.setAttribute('data-focused', 'true');
+                    
+                    // Opcional: mover foco táctil al enlace interno para mejorar experiencia
+                    // pero sin quitar la posibilidad de navegación normal
+                    const btn = card.querySelector('.btn-modulo');
+                    if (btn && document.activeElement !== btn) {
+                        // No forzamos el foco del teclado aquí, solo visual
+                    }
+                }
+            }
+
+            // Evento de teclado para navegación entre tarjetas
+            document.addEventListener('keydown', (e) => {
+                // Solo si es flecha izquierda/derecha y no estamos dentro de un componente interactivo
+                if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                    const activeTag = document.activeElement.tagName;
+                    // Evitar interferir si el usuario está en un enlace o input
+                    if (activeTag === 'A' || activeTag === 'BUTTON' || activeTag === 'INPUT' || activeTag === 'TEXTAREA') {
+                        return; // Dejar que el comportamiento normal ocurra (por ejemplo, navegar en un campo de texto)
+                    }
+                    
+                    e.preventDefault(); // Prevenir scroll horizontal
+
+                    // Inicializar índice si es necesario
+                    if (focusedCardIndex === -1) {
+                        focusedCardIndex = 0;
+                    } else {
+                        if (e.key === 'ArrowRight') {
+                            focusedCardIndex = (focusedCardIndex + 1) % cards.length;
+                        } else if (e.key === 'ArrowLeft') {
+                            focusedCardIndex = (focusedCardIndex - 1 + cards.length) % cards.length;
+                        }
+                    }
+                    updateCardFocus(focusedCardIndex);
+                    
+                    // Pequeño feedback sonoro (opcional)
+                    try {
+                        if (window.audioCtx || window.speechSynthesis) {
+                            // Simular sonido o simplemente no hacer nada
+                        }
+                    } catch (error) {}
+                }
+
+                // Tecla Enter: activar el módulo seleccionado visualmente
+                if (e.key === 'Enter' && focusedCardIndex !== -1) {
+                    const btn = cards[focusedCardIndex]?.querySelector('.btn-modulo');
+                    if (btn) {
+                        e.preventDefault(); // Evitar cualquier doble acción
+                        btn.click();
+                    }
+                }
+            });
+
+            // Hacer clic en cualquier parte del landing quita el foco visual de las tarjetas
+            document.addEventListener('click', (e) => {
+                // Si se hizo clic en una tarjeta o sus hijos, queremos que esa tarjeta quede resaltada
+                let cardClicked = null;
+                for (let card of cards) {
+                    if (card.contains(e.target)) {
+                        cardClicked = card;
+                        break;
+                    }
+                }
+
+                if (cardClicked) {
+                    // Encontrar índice de la tarjeta clickeada
+                    const index = Array.from(cards).indexOf(cardClicked);
+                    focusedCardIndex = index;
+                    updateCardFocus(focusedCardIndex);
+                } else {
+                    // Click fuera de tarjetas: remover resalte
+                    focusedCardIndex = -1;
+                    updateCardFocus(-1);
+                }
+            });
+
+            // Para mantener la consistencia cuando se navega con Tab por enlaces
+            // Si un enlace recibe foco, podemos resaltar su tarjeta padre
+            document.addEventListener('focusin', (e) => {
+                const btn = e.target.closest('.btn-modulo');
+                if (btn) {
+                    const card = btn.closest('.module-card');
+                    if (card) {
+                        const index = Array.from(cards).indexOf(card);
+                        focusedCardIndex = index;
+                        updateCardFocus(focusedCardIndex);
+                    }
+                }
+            });
+
+            // Asegurar que los enlaces funcionan de manera nativa (sin interceptar)
+            // Solo añadimos un pequeño console para depurar
+            tutorBtn.addEventListener('click', (e) => {
+                // Dejar navegación normal
+                console.log('Navegando a módulo tutor');
+            });
+
+            userBtn.addEventListener('click', (e) => {
+                // Dejar navegación normal a modulo_usuario.html (ahora existe)
+                console.log('Navegando a módulo usuario');
+            });
+
+            // Pequeña utilidad de voz para el saludo inicial (opcional)
+            if ('speechSynthesis' in window) {
+                let said = false;
+                function sayWelcome() {
+                    if (said) return;
+                    const utterance = new SpeechSynthesisUtterance('Sistema de aprendizaje de comunicación. Elige módulo tutor o módulo usuario.');
+                    utterance.lang = 'es-ES';
+                    utterance.volume = 0.8;
+                    speechSynthesis.speak(utterance);
+                    said = true;
+                }
+                // Activamos con un toque suave: cuando se pulse alguna tecla o se haga clic.
+                document.addEventListener('click', function once() {
+                    sayWelcome();
+                }, { once: true });
+                document.addEventListener('keydown', function onceKey() {
+                    sayWelcome();
+                }, { once: true });
+            }
+        })();
+    </script>
+</body>
+</html>
