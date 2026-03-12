@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evaluación · tutor accesible</title>
+    <title>Evaluación · tutor accesible · alto contraste cromático</title>
     <style>
+        /* RESET y BASE: máximo contraste, fondo negro, bordes duros */
         * {
             margin: 0;
             padding: 0;
@@ -27,11 +28,12 @@
             width: 100%;
             background: #000000;
             border-radius: 2rem;
-            box-shadow: 0 0 0 4px #ffffff, 0 0 0 8px #FF00FF;
+            box-shadow: 0 0 0 4px #ffffff, 0 0 0 8px #FF00FF; /* magenta puro */
             padding: 2rem;
             border: 4px solid #ffffff;
         }
 
+        /* indicador de ruta con color neón propio */
         .path-indicator {
             display: flex;
             align-items: center;
@@ -39,7 +41,7 @@
             margin-bottom: 2rem;
             font-size: 1.2rem;
             font-weight: 700;
-            color: #FF00FF;
+            color: #00FFFF; /* cian puro */
             text-transform: uppercase;
             letter-spacing: 0.05em;
             background: #000000;
@@ -48,7 +50,7 @@
         }
 
         .path-indicator span {
-            background: #FF00FF;
+            background: #00FFFF; /* cian */
             padding: 0.6rem 1.5rem;
             border-radius: 0;
             border: 3px solid #ffffff;
@@ -65,7 +67,7 @@
             border-radius: 0;
             font-size: 1.2rem;
             color: #000000;
-            border: 3px solid #FF00FF;
+            border: 3px solid #00FFFF; /* cian */
             font-weight: 700;
         }
 
@@ -75,15 +77,16 @@
             padding: 0.3rem 1rem;
             font-family: monospace;
             font-weight: 900;
-            color: #FF00FF;
-            border: 3px solid #FF00FF;
+            color: #00FFFF;
+            border: 3px solid #00FFFF;
             font-size: 1.3rem;
         }
 
+        /* módulo tutor en amarillo neón */
         .modulo-tutor {
             font-size: 1.5rem;
             font-weight: 900;
-            color: #FF00FF;
+            color: #FFFF00; /* amarillo puro */
             margin-bottom: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
@@ -101,17 +104,17 @@
             letter-spacing: -0.02em;
             background: #000000;
             padding: 0.8rem 1.5rem;
-            border: 4px solid #FF00FF;
-            text-shadow: 4px 4px 0 #FF00FF;
+            border: 4px solid #FFFF00; /* amarillo */
+            text-shadow: 4px 4px 0 #FFFF00;
         }
 
-        /* Área especial para la pregunta en evaluación - ALTO CONTRASTE */
+        /* área de pregunta: borde verde lima brillante */
         .question-area {
             background: #000000;
             border-radius: 0;
             padding: 2rem;
             margin-bottom: 2rem;
-            border: 6px solid #FF00FF;
+            border: 6px solid #7FFF00; /* verde chartreuse */
             color: #ffffff;
             font-size: 1.8rem;
             line-height: 1.6;
@@ -129,7 +132,7 @@
             color: #ffffff;
             font-size: 1.6rem;
             line-height: 1.6;
-            border-left: 15px solid #FF00FF;
+            border-left: 15px solid #FFA500; /* naranja puro */
             font-weight: 700;
         }
 
@@ -140,6 +143,7 @@
             margin: 2rem 0 2rem 0;
         }
 
+        /* ---------- ICONOS CON COLORES DISTINTOS POR TIPO ---------- */
         .option {
             background: #000000;
             border: 4px solid #ffffff;
@@ -156,49 +160,135 @@
             box-shadow: 5px 5px 0 #666666;
         }
 
-        .option.active {
-            background: #FF00FF;
-            border-color: #ffffff;
-            border-width: 6px;
-            transform: scale(1.02) translateX(10px);
-            box-shadow: 10px 10px 0 #ffffff;
-            color: #000000;
-            font-weight: 900;
-        }
-
-        .option.active .option-symbol {
-            color: #000000;
-            font-weight: 900;
-            background: #ffffff;
-            padding: 0.5rem;
-            border: 3px solid #000000;
-        }
-
-        .option.empty-option {
-            opacity: 1;
-            border-style: solid;
-            background: #333333;
-            border-color: #999999;
-            color: #cccccc;
-        }
-
-        .option.empty-option.active {
-            background: #FF00FF;
-            border-color: #ffffff;
-            color: #000000;
-        }
-
-        .option-symbol {
+        /* Color de icono según tipo (reconocible aún sin selección) */
+        .option .option-symbol {
             font-size: 2.5rem;
             width: 3rem;
             text-align: center;
-            color: #FF00FF;
-            font-weight: 700;
+            font-weight: 900;
             background: #000000;
             padding: 0.3rem;
             border: 3px solid #ffffff;
+            transition: all 0.1s ease;
         }
 
+        /* módulo / carpeta: icono naranja */
+        .option[data-type="module"] .option-symbol {
+            color: #FFA500; /* naranja */
+            border-color: #FFA500;
+        }
+
+        /* hoja / leaf: icono verde lima */
+        .option[data-type="leaf"] .option-symbol {
+            color: #7FFF00; /* verde lima */
+            border-color: #7FFF00;
+        }
+
+        /* evaluación / quiz: icono magenta */
+        .option[data-type="quiz"] .option-symbol {
+            color: #FF00FF; /* magenta */
+            border-color: #FF00FF;
+        }
+
+        /* opción vacía (placeholder): icono gris, pero con estilo propio */
+        .option.empty-option .option-symbol {
+            color: #808080;
+            border-color: #808080;
+            background: #000000;
+        }
+
+        /* retroceso (back): icono cian */
+        .option[data-type="back"] .option-symbol {
+            color: #00FFFF; /* cian */
+            border-color: #00FFFF;
+        }
+
+        /* ------------------------------------------------------------ */
+        /* ESTADO ACTIVO: EL CUADRO COMPLETO SE ILUMINA DEL COLOR DEL ICONO */
+        .option.active {
+            border-width: 6px;
+            transform: scale(1.02) translateX(10px);
+            box-shadow: 10px 10px 0 #ffffff;
+            font-weight: 900;
+        }
+
+        /* módulo activo: fondo naranja */
+        .option.active[data-type="module"] {
+            background: #FFA500; /* naranja */
+            border-color: #ffffff;
+            color: #000000;
+        }
+        .option.active[data-type="module"] .option-symbol {
+            color: #000000;
+            background: #ffffff;
+            border-color: #000000;
+        }
+
+        /* leaf activo: fondo verde lima */
+        .option.active[data-type="leaf"] {
+            background: #7FFF00; /* verde lima */
+            border-color: #ffffff;
+            color: #000000;
+        }
+        .option.active[data-type="leaf"] .option-symbol {
+            color: #000000;
+            background: #ffffff;
+            border-color: #000000;
+        }
+
+        /* quiz activo: fondo magenta */
+        .option.active[data-type="quiz"] {
+            background: #FF00FF; /* magenta */
+            border-color: #ffffff;
+            color: #000000;
+        }
+        .option.active[data-type="quiz"] .option-symbol {
+            color: #000000;
+            background: #ffffff;
+            border-color: #000000;
+        }
+
+        /* back activo: fondo cian */
+        .option.active[data-type="back"] {
+            background: #00FFFF; /* cian */
+            border-color: #ffffff;
+            color: #000000;
+        }
+        .option.active[data-type="back"] .option-symbol {
+            color: #000000;
+            background: #ffffff;
+            border-color: #000000;
+        }
+
+        /* empty activo: mantiene esquema magenta neón para destacar */
+        .option.active.empty-option {
+            background: #FF00FF; /* magenta */
+            border-color: #ffffff;
+            color: #000000;
+        }
+        .option.active.empty-option .option-symbol {
+            color: #000000;
+            background: #ffffff;
+            border-color: #000000;
+        }
+
+        /* para opciones sin tipo específico (raíz) usaremos azul neón */
+        .option:not([data-type]) .option-symbol {
+            color: #1E90FF;
+            border-color: #1E90FF;
+        }
+        .option.active:not([data-type]) {
+            background: #1E90FF;
+            border-color: #ffffff;
+            color: #000000;
+        }
+        .option.active:not([data-type]) .option-symbol {
+            color: #000000;
+            background: #ffffff;
+            border-color: #000000;
+        }
+
+        /* feedback con fondo magenta, texto negro */
         .feedback {
             background: #000000;
             border-radius: 0;
@@ -212,6 +302,7 @@
             text-transform: uppercase;
         }
 
+        /* barra de navegación con iconos */
         .nav-bar {
             display: flex;
             justify-content: center;
@@ -253,6 +344,7 @@
             text-transform: uppercase;
         }
 
+        /* botón reset con contraste extremo */
         .reset-btn {
             background: #ffffff;
             border: 6px solid #000000;
@@ -303,28 +395,36 @@
             padding: 1rem 2rem;
             font-size: 1.5rem;
             cursor: pointer;
-            color: #FF00FF;
+            color: #FFA500; /* naranja distintivo */
             font-weight: 900;
             text-transform: uppercase;
             box-shadow: 5px 5px 0 #ffffff;
+            transition: 0.1s;
         }
         
         .voice-btn:hover {
-            background: #FF00FF;
+            background: #FFA500;
             color: #000000;
             border-color: #000000;
             transform: scale(1.05);
             box-shadow: 8px 8px 0 #ffffff;
         }
-        
-        @media (max-width: 550px) {
-            .card { padding: 1rem; }
-            .title { font-size: 2rem; }
-            .option { font-size: 1.4rem; padding: 1rem; }
-            .feedback { font-size: 1.2rem; }
+
+        /* foco visible extremo */
+        :focus {
+            outline: 8px solid #FFFF00 !important; /* amarillo */
+            outline-offset: 8px !important;
         }
 
-        /* Indicador visual para respuestas - ALTO CONTRASTE */
+        .card:focus {
+            outline: none;
+        }
+
+        strong, b {
+            color: #FF00FF;
+        }
+
+        /* garantizar visibilidad del ícono activo */
         .answer-badge {
             background: #FF00FF;
             border-radius: 0;
@@ -336,30 +436,16 @@
             font-weight: 900;
         }
 
-        /* Estilos adicionales para máximo contraste */
-        kbd, button, .option, .feedback, .title, .path-indicator, .back-hint {
-            transition: all 0.1s ease;
-        }
-
-        /* Garantizar que el foco sea visible */
-        :focus {
-            outline: 8px solid #FF00FF !important;
-            outline-offset: 8px !important;
-        }
-
-        .card:focus {
-            outline: none;
-        }
-
-        /* Alto contraste para textos */
-        strong, b {
-            color: #FF00FF;
+        @media (max-width: 550px) {
+            .card { padding: 1rem; }
+            .title { font-size: 2rem; }
+            .option { font-size: 1.4rem; padding: 1rem; }
         }
     </style>
 </head>
 <body>
     <div class="card" id="appContainer" tabindex="-1">
-        <!-- ruta y retroceso - ALTO CONTRASTE -->
+        <!-- ruta y retroceso -->
         <div class="path-indicator">
             <span id="pathDisplay">🎧 INICIO</span>
             <div class="back-hint">
@@ -367,218 +453,132 @@
             </div>
         </div>
 
-        <!-- título principal -->
         <div class="modulo-tutor">MÓDULO USUARIO</div>
         <div class="title" id="titleDisplay">BIENVENIDA SONORA</div>
 
         <!-- ÁREA DE PREGUNTA (solo visible en evaluación) -->
         <div id="questionContainer" style="display: none;" class="question-area">
             <span id="questionText"></span>
-            <div style="font-size: 1.3rem; margin-top: 1rem; color: #FF00FF; font-weight: 900;">↓ NAVEGA A LAS RESPUESTAS</div>
+            <div style="font-size: 1.3rem; margin-top: 1rem; color: #7FFF00; font-weight: 900;">↓ NAVEGA A LAS RESPUESTAS</div>
         </div>
 
-        <!-- contenido explicativo / auditivo simulado (visible solo fuera de evaluación) -->
+        <!-- contenido explicativo -->
         <div id="contentContainer" class="content-message">
             ESCUCHA: FLECHAS PARA NAVEGAR. → SELECCIONA, ← RETROCEDE.
         </div>
 
-        <!-- contenedor de opciones (unidades, submenús, respuestas) -->
+        <!-- contenedor de opciones -->
         <div id="optionsContainer" class="options"></div>
 
-        <!-- feedback tipo "sonido" siempre visible -->
+        <!-- feedback -->
         <div class="feedback" id="feedbackMessage">
             🎤 INICIO: EXPLORA LAS UNIDADES.
         </div>
 
-        <!-- barra de comandos visual - ALTO CONTRASTE -->
+        <!-- barra de comandos -->
         <div class="nav-bar">
             <div class="key-group"><kbd>↑</kbd><kbd>↓</kbd> <span>NAVEGAR</span></div>
             <div class="key-group"><kbd>→</kbd> <span>SELECCIONAR</span></div>
         </div>
         
-        <!-- controles de voz adicionales -->
+        <!-- controles de voz -->
         <div class="voice-controls">
             <button class="voice-btn" id="repeatBtn">🔊 REPETIR</button>
             <button class="voice-btn" id="muteBtn">🔇 SILENCIAR</button>
         </div>
 
-        <!-- botón de reinicio -->
         <button class="reset-btn" id="resetBtn">↻ VOLVER AL INICIO</button>
     </div>
 
     <script>
         (function() {
-            // ---------- CONFIGURACIÓN DE SONIDO Y VOZ ----------
+            // sonido y voz (sin cambios funcionales)
             let audioCtx = null;
-            
             function playClickSound() {
                 try {
                     if (!audioCtx) {
                         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                     }
                     if (audioCtx.state === 'suspended') {
-                        audioCtx.resume().then(() => {
-                            createAndPlayClick();
-                        }).catch(() => {});
+                        audioCtx.resume().then(() => createAndPlayClick()).catch(() => {});
                     } else {
                         createAndPlayClick();
                     }
                 } catch (e) {}
             }
-            
             function createAndPlayClick() {
                 if (!audioCtx) return;
                 try {
                     const osc = audioCtx.createOscillator();
                     const gainNode = audioCtx.createGain();
-                    
                     osc.type = 'sine';
-                    osc.frequency.value = 1200; // Frecuencia más alta para mejor audibilidad
-                    gainNode.gain.value = 0.2; // Volumen ligeramente más alto
-                    
+                    osc.frequency.value = 1200;
+                    gainNode.gain.value = 0.2;
                     osc.connect(gainNode);
                     gainNode.connect(audioCtx.destination);
-                    
                     osc.start();
-                    osc.stop(audioCtx.currentTime + 0.08); // Sonido ligeramente más largo
+                    osc.stop(audioCtx.currentTime + 0.08);
                 } catch (e) {}
             }
 
-            // Síntesis de voz
             let speechEnabled = true;
             const speech = window.speechSynthesis;
             let currentUtterance = null;
-
             function speakText(text) {
                 if (!speechEnabled || !text || !window.speechSynthesis) return;
-                
-                if (currentUtterance) {
-                    speech.cancel();
-                }
-                
+                if (currentUtterance) speech.cancel();
                 const cleanText = text.replace(/[📡🦯💬✏️🎧▶️↰🔊🔇🔘🎤👆🎭📖✅❌👇]/g, '').trim();
                 if (!cleanText) return;
-                
                 const utterance = new SpeechSynthesisUtterance(cleanText);
                 utterance.lang = 'es-ES';
-                utterance.rate = 0.85; // Ligeramente más lento para mejor comprensión
+                utterance.rate = 0.85;
                 utterance.pitch = 1;
-                utterance.volume = 1.5; // Volumen máximo
-                
+                utterance.volume = 1.5;
                 currentUtterance = utterance;
-                
-                utterance.onend = () => {
-                    currentUtterance = null;
-                };
-                
+                utterance.onend = () => currentUtterance = null;
                 speech.speak(utterance);
             }
 
-            // ---------- ÁRBOL (con opción vacía inicial en cada menú) ----------
+            // árbol (idéntico, solo añadimos tipo explícito para cada opción)
             const tree = {
-                id: 'root',
-                type: 'root',
-                name: 'INICIO',
-                title: '🎧 BIENVENIDA SONORA',
+                id: 'root', type: 'root', name: 'INICIO', title: '🎧 BIENVENIDA SONORA',
                 description: 'ESCUCHA: FLECHAS PARA NAVEGAR. → SELECCIONA, ← RETROCEDE.',
                 options: [
-                    { 
-                        id: 'empty_root', 
-                        name: '👇 ELIGE UNA OPCIÓN', 
-                        description: 'PRESIONA FLECHA ABAJO PARA VER LAS OPCIONES',
-                        type: 'empty'
+                    { id: 'empty_root', name: '👇 ELIGE UNA OPCIÓN', description: 'PRESIONA FLECHA ABAJO PARA VER LAS OPCIONES', type: 'empty' },
+                    { id: 'fundamentos', name: '📡 1. FUNDAMENTOS', description: 'EMISOR, RECEPTOR Y MENSAJE', type: 'module', content: 'MÓDULO FUNDAMENTOS: LA COMUNICACIÓN NECESITA EMISOR, MENSAJE Y RECEPTOR.',
+                      options: [
+                        { id: 'empty_fund', name: '👇 ELIGE UNA OPCIÓN', description: 'PRESIONA FLECHA ABAJO PARA VER LAS OPCIONES', type: 'empty' },
+                        { id: 'fund_sub1', name: '▶️ EMISOR', type: 'leaf', content: 'EMISOR: QUIEN ENVÍA EL MENSAJE.' },
+                        { id: 'fund_sub2', name: '▶️ RECEPTOR', type: 'leaf', content: 'RECEPTOR: SISTEMA O PERSONA QUE INTERPRETA.' },
+                        { id: 'fund_sub3', name: '▶️ MENSAJE', type: 'leaf', content: 'MENSAJE: LA INFORMACIÓN.' },
+                        { id: 'fund_back', name: '↰ VOLVER A FUNDAMENTOS', type: 'back', target: 'fundamentos' }
+                      ]
                     },
-                    { 
-                        id: 'fundamentos', 
-                        name: '📡 1. FUNDAMENTOS', 
-                        description: 'EMISOR, RECEPTOR Y MENSAJE',
-                        type: 'module',
-                        content: 'MÓDULO FUNDAMENTOS: LA COMUNICACIÓN NECESITA EMISOR, MENSAJE Y RECEPTOR.',
-                        options: [
-                            { 
-                                id: 'empty_fund', 
-                                name: '👇 ELIGE UNA OPCIÓN', 
-                                description: 'PRESIONA FLECHA ABAJO PARA VER LAS OPCIONES',
-                                type: 'empty'
-                            },
-                            { id: 'fund_sub1', name: '▶️ EMISOR', type: 'leaf', content: 'EMISOR: QUIEN ENVÍA EL MENSAJE.' },
-                            { id: 'fund_sub2', name: '▶️ RECEPTOR', type: 'leaf', content: 'RECEPTOR: SISTEMA O PERSONA QUE INTERPRETA.' },
-                            { id: 'fund_sub3', name: '▶️ MENSAJE', type: 'leaf', content: 'MENSAJE: LA INFORMACIÓN.' },
-                            { id: 'fund_back', name: '↰ VOLVER A FUNDAMENTOS', type: 'back', target: 'fundamentos' }
-                        ]
+                    { id: 'asistencia', name: '🦯 2. ASISTENCIA', description: 'LECTORES DE PANTALLA Y GESTOS', type: 'module', content: 'HERRAMIENTAS: LECTORES DE PANTALLA Y COMANDOS GESTUALES.',
+                      options: [
+                        { id: 'empty_asist', name: '👇 ELIGE UNA OPCIÓN', description: 'PRESIONA FLECHA ABAJO PARA VER LAS OPCIONES', type: 'empty' },
+                        { id: 'asist1', name: '🎤 NARRACIÓN PASO A PASO', type: 'leaf', content: 'NARRACIÓN ACTIVADA: GUÍA DETALLADA.' },
+                        { id: 'asist2', name: '👆 GESTOS TÁCTILES', type: 'leaf', content: 'GESTOS: FLECHAS ARRIBA/ABAJO.' },
+                        { id: 'asist_back', name: '↰ VOLVER A ASISTENCIA', type: 'back', target: 'asistencia' }
+                      ]
                     },
-                    { 
-                        id: 'asistencia', 
-                        name: '🦯 2. ASISTENCIA', 
-                        description: 'LECTORES DE PANTALLA Y GESTOS',
-                        type: 'module',
-                        content: 'HERRAMIENTAS: LECTORES DE PANTALLA Y COMANDOS GESTUALES.',
-                        options: [
-                            { 
-                                id: 'empty_asist', 
-                                name: '👇 ELIGE UNA OPCIÓN', 
-                                description: 'PRESIONA FLECHA ABAJO PARA VER LAS OPCIONES',
-                                type: 'empty'
-                            },
-                            { id: 'asist1', name: '🎤 NARRACIÓN PASO A PASO', type: 'leaf', content: 'NARRACIÓN ACTIVADA: GUÍA DETALLADA.' },
-                            { id: 'asist2', name: '👆 GESTOS TÁCTILES', type: 'leaf', content: 'GESTOS: FLECHAS ARRIBA/ABAJO.' },
-                            { id: 'asist_back', name: '↰ VOLVER A ASISTENCIA', type: 'back', target: 'asistencia' }
-                        ]
+                    { id: 'interaccion', name: '💬 3. INTERACCIÓN', description: 'ETIQUETA EN FOROS Y DIÁLOGOS', type: 'module', content: 'INTERACCIÓN: SIMULACIÓN DE FORO ACCESIBLE.',
+                      options: [
+                        { id: 'empty_inter', name: '👇 ELIGE UNA OPCIÓN', description: 'PRESIONA FLECHA ABAJO PARA VER LAS OPCIONES', type: 'empty' },
+                        { id: 'social1', name: '🎭 DIÁLOGO SIMULADO', type: 'leaf', content: 'USUARIO A: "HOLA" USUARIO B: "USO FLECHAS".' },
+                        { id: 'social2', name: '📖 CASO PRÁCTICO', type: 'leaf', content: 'CASO: PERSONA CON DISCAPACIDAD VISUAL.' },
+                        { id: 'social_back', name: '↰ VOLVER A INTERACCIÓN', type: 'back', target: 'interaccion' }
+                      ]
                     },
-                    { 
-                        id: 'interaccion', 
-                        name: '💬 3. INTERACCIÓN', 
-                        description: 'ETIQUETA EN FOROS Y DIÁLOGOS',
-                        type: 'module',
-                        content: 'INTERACCIÓN: SIMULACIÓN DE FORO ACCESIBLE.',
-                        options: [
-                            { 
-                                id: 'empty_inter', 
-                                name: '👇 ELIGE UNA OPCIÓN', 
-                                description: 'PRESIONA FLECHA ABAJO PARA VER LAS OPCIONES',
-                                type: 'empty'
-                            },
-                            { id: 'social1', name: '🎭 DIÁLOGO SIMULADO', type: 'leaf', content: 'USUARIO A: "HOLA" USUARIO B: "USO FLECHAS".' },
-                            { id: 'social2', name: '📖 CASO PRÁCTICO', type: 'leaf', content: 'CASO: PERSONA CON DISCAPACIDAD VISUAL.' },
-                            { id: 'social_back', name: '↰ VOLVER A INTERACCIÓN', type: 'back', target: 'interaccion' }
-                        ]
-                    },
-                    { 
-                        id: 'evaluacion', 
-                        name: '✏️ 4. EVALUACIÓN', 
-                        description: 'PREGUNTAS DE OPCIÓN MÚLTIPLE',
-                        type: 'quiz',
-                        question: 'PREGUNTA 1: ¿QUÉ ELEMENTO ES CLAVE EN LA COMUNICACIÓN?',
-                        options: [
-                            { 
-                                id: 'empty_quiz', 
-                                name: '👇 ELIGE UNA RESPUESTA', 
-                                description: 'PRESIONA FLECHA ABAJO PARA VER LAS OPCIONES',
-                                type: 'empty'
-                            },
-                            { 
-                                id: 'quiz1_a', 
-                                name: 'A) EMISOR', 
-                                type: 'leaf', 
-                                content: '✅ ¡CORRECTO! EMISOR, RECEPTOR Y MENSAJE.',
-                                selectionText: 'PREGUNTA: ¿QUÉ ELEMENTO ES CLAVE? HAS SELECCIONADO: A) EMISOR. RESPUESTA CORRECTA.'
-                            },
-                            { 
-                                id: 'quiz1_b', 
-                                name: 'B) RATÓN ÓPTICO', 
-                                type: 'leaf', 
-                                content: '❌ INCORRECTO. INTÉNTALO DE NUEVO.',
-                                selectionText: 'PREGUNTA: ¿QUÉ ELEMENTO ES CLAVE? HAS SELECCIONADO: B) RATÓN ÓPTICO. INCORRECTO.'
-                            },
-                            { 
-                                id: 'quiz1_c', 
-                                name: 'C) BRILLO PANTALLA', 
-                                type: 'leaf', 
-                                content: '❌ INCORRECTO. LA RESPUESTA ES EMISOR.',
-                                selectionText: 'PREGUNTA: ¿QUÉ ELEMENTO ES CLAVE? HAS SELECCIONADO: C) BRILLO. INCORRECTO.'
-                            },
-                            { id: 'quiz_back', name: '↰ SALIR DE EVALUACIÓN', type: 'back', target: 'evaluacion' }
-                        ]
+                    { id: 'evaluacion', name: '✏️ 4. EVALUACIÓN', description: 'PREGUNTAS DE OPCIÓN MÚLTIPLE', type: 'quiz',
+                      question: 'PREGUNTA 1: ¿QUÉ ELEMENTO ES CLAVE EN LA COMUNICACIÓN?',
+                      options: [
+                        { id: 'empty_quiz', name: '👇 ELIGE UNA RESPUESTA', description: 'PRESIONA FLECHA ABAJO PARA VER LAS OPCIONES', type: 'empty' },
+                        { id: 'quiz1_a', name: 'A) EMISOR', type: 'leaf', content: '✅ ¡CORRECTO! EMISOR, RECEPTOR Y MENSAJE.', selectionText: 'PREGUNTA: ¿QUÉ ELEMENTO ES CLAVE? HAS SELECCIONADO: A) EMISOR. RESPUESTA CORRECTA.' },
+                        { id: 'quiz1_b', name: 'B) RATÓN ÓPTICO', type: 'leaf', content: '❌ INCORRECTO. INTÉNTALO DE NUEVO.', selectionText: 'PREGUNTA: ¿QUÉ ELEMENTO ES CLAVE? HAS SELECCIONADO: B) RATÓN ÓPTICO. INCORRECTO.' },
+                        { id: 'quiz1_c', name: 'C) BRILLO PANTALLA', type: 'leaf', content: '❌ INCORRECTO. LA RESPUESTA ES EMISOR.', selectionText: 'PREGUNTA: ¿QUÉ ELEMENTO ES CLAVE? HAS SELECCIONADO: C) BRILLO. INCORRECTO.' },
+                        { id: 'quiz_back', name: '↰ SALIR DE EVALUACIÓN', type: 'back', target: 'evaluacion' }
+                      ]
                     }
                 ]
             };
@@ -588,7 +588,6 @@
             let currentNode = tree;
             let selectedIndex = 0;
 
-            // referencias
             const pathEl = document.getElementById('pathDisplay');
             const titleEl = document.getElementById('titleDisplay');
             const contentContainer = document.getElementById('contentContainer');
@@ -601,70 +600,44 @@
             const muteBtn = document.getElementById('muteBtn');
             const appContainer = document.getElementById('appContainer');
 
-            // util: encontrar nodo por id
             function findNodeById(node, id) {
                 if (node.id === id) return node;
                 if (node.options) {
                     for (let opt of node.options) {
                         if (opt.id === id) return opt;
-                        if (opt.options) {
-                            const found = findNodeById(opt, id);
-                            if (found) return found;
-                        }
+                        if (opt.options) { const found = findNodeById(opt, id); if (found) return found; }
                     }
                 }
                 return null;
             }
 
-            // reconstruir ruta para back coherente
             function findPathToNode(node, targetId, currentPath = []) {
                 if (node.id === targetId) return [...currentPath, node];
                 if (node.options) {
                     for (let opt of node.options) {
                         if (opt.id === targetId) return [...currentPath, node, opt];
-                        if (opt.options) {
-                            const deeper = findPathToNode(opt, targetId, [...currentPath, node]);
-                            if (deeper.length) return deeper;
-                        }
+                        if (opt.options) { const deeper = findPathToNode(opt, targetId, [...currentPath, node]); if (deeper.length) return deeper; }
                     }
                 }
                 return [];
             }
 
-            // función para obtener el texto de navegación (solo nombre)
             function getNavigationText() {
-                const optionsList = (currentNode.options && Array.isArray(currentNode.options)) ? currentNode.options : [];
-                
-                if (optionsList.length > 0 && selectedIndex >= 0 && selectedIndex < optionsList.length) {
-                    const opt = optionsList[selectedIndex];
-                    if (opt.type === 'empty') {
-                        return null;
-                    }
-                    return `${opt.name}`;
+                const list = (currentNode.options && Array.isArray(currentNode.options)) ? currentNode.options : [];
+                if (list.length && selectedIndex >= 0 && selectedIndex < list.length) {
+                    const opt = list[selectedIndex];
+                    return opt.type === 'empty' ? null : opt.name;
                 }
                 return null;
             }
 
-            // función para obtener el texto de selección (cuando se presiona →)
             function getSelectionText(opt) {
-                if (!opt) return null;
-                
-                if (opt.type === 'empty') {
-                    return null;
-                }
-                
-                if (opt.selectionText) {
-                    return opt.selectionText;
-                }
-                
-                if (opt.type === 'leaf') {
-                    return `${opt.name}. ${opt.content || ''}`;
-                }
-                
+                if (!opt || opt.type === 'empty') return null;
+                if (opt.selectionText) return opt.selectionText;
+                if (opt.type === 'leaf') return `${opt.name}. ${opt.content || ''}`;
                 return `${opt.name}. ${opt.description || ''}. PULSA → PARA ENTRAR.`;
             }
 
-            // Función especial para anunciar la pregunta al entrar a evaluación
             function announceQuestionIfNeeded() {
                 if (currentNode.type === 'quiz' && currentNode.question) {
                     playClickSound();
@@ -672,23 +645,16 @@
                 }
             }
 
-            // renderizar todo
+            // render con asignación de data-type para colorear iconos
             function render() {
-                // ruta
                 let path = '🎧 ';
-                if (historyStack.length) {
-                    path += historyStack.map(n => n.name || 'INICIO').join(' / ') + ' / ';
-                }
+                if (historyStack.length) path += historyStack.map(n => n.name || 'INICIO').join(' / ') + ' / ';
                 path += currentNode.name || 'RAÍZ';
                 pathEl.innerText = path.toUpperCase();
 
-                // título
                 titleEl.innerText = (currentNode.title || currentNode.name || 'MÓDULO').toUpperCase();
 
-                // Determinar si estamos en evaluación
                 const isQuiz = currentNode.type === 'quiz';
-                
-                // Mostrar/ocultar áreas según el tipo
                 if (isQuiz && currentNode.question) {
                     questionContainer.style.display = 'block';
                     questionText.innerText = currentNode.question;
@@ -696,17 +662,9 @@
                 } else {
                     questionContainer.style.display = 'none';
                     contentContainer.style.display = 'block';
-                    
-                    if (currentNode.content) {
-                        contentContainer.innerText = currentNode.content.toUpperCase();
-                    } else if (currentNode.description) {
-                        contentContainer.innerText = currentNode.description.toUpperCase();
-                    } else {
-                        contentContainer.innerText = 'USA LAS FLECHAS PARA NAVEGAR.';
-                    }
+                    contentContainer.innerText = (currentNode.content || currentNode.description || 'USA LAS FLECHAS PARA NAVEGAR.').toUpperCase();
                 }
 
-                // opciones
                 const optionsList = (currentNode.options && Array.isArray(currentNode.options)) ? currentNode.options : [];
                 optionsEl.innerHTML = '';
 
@@ -718,13 +676,18 @@
                         const div = document.createElement('div');
                         div.className = `option ${idx === selectedIndex ? 'active' : ''} ${opt.type === 'empty' ? 'empty-option' : ''}`;
                         div.setAttribute('data-index', idx);
-                        
+                        if (opt.type) div.setAttribute('data-type', opt.type);  // ¡clave! para colores
+
                         let symbol = '●';
                         if (opt.type === 'empty') symbol = '○';
                         else if (opt.name.includes('A)')) symbol = 'A';
                         else if (opt.name.includes('B)')) symbol = 'B';
                         else if (opt.name.includes('C)')) symbol = 'C';
-                        
+                        else if (opt.type === 'back') symbol = '↰';
+                        else if (opt.type === 'module') symbol = '📦';
+                        else if (opt.type === 'leaf') symbol = '▶️';
+                        else if (opt.type === 'quiz') symbol = '✏️';
+
                         div.innerHTML = `<span class="option-symbol">${symbol}</span><span>${opt.name.toUpperCase()}</span>`;
                         optionsEl.appendChild(div);
                     });
@@ -733,88 +696,48 @@
                 // feedback
                 if (optionsList.length > 0 && selectedIndex >= 0 && selectedIndex < optionsList.length) {
                     const opt = optionsList[selectedIndex];
-                    if (opt.type === 'empty') {
-                        feedbackEl.innerText = `👆 ${opt.name.toUpperCase()} — ${opt.description.toUpperCase()}`;
-                    } else {
-                        feedbackEl.innerText = `👉 ${opt.name.toUpperCase()} — ${(opt.description || (isQuiz ? 'OPCIÓN DE RESPUESTA' : 'PULSA → PARA ENTRAR')).toUpperCase()}`;
-                    }
+                    feedbackEl.innerText = opt.type === 'empty' 
+                        ? `👆 ${opt.name.toUpperCase()} — ${opt.description.toUpperCase()}`
+                        : `👉 ${opt.name.toUpperCase()} — ${(opt.description || (isQuiz ? 'OPCIÓN DE RESPUESTA' : 'PULSA → PARA ENTRAR')).toUpperCase()}`;
                 } else {
-                    if (currentNode.id === 'root') {
-                        feedbackEl.innerText = '🎤 INICIO: ↑↓ NAVEGAS, → SELECCIONAS, ← RETROCEDES.';
-                    } else if (optionsList.length === 0) {
-                        feedbackEl.innerText = `🔵 ${(currentNode.name || '').toUpperCase()} — USA ← PARA VOLVER.`;
-                    } else {
-                        feedbackEl.innerText = '💡 NAVEGA CON ↑↓ Y PULSA → PARA SELECCIONAR.';
-                    }
+                    feedbackEl.innerText = currentNode.id === 'root' 
+                        ? '🎤 INICIO: ↑↓ NAVEGAS, → SELECCIONAS, ← RETROCEDES.'
+                        : `🔵 ${(currentNode.name || '').toUpperCase()} — USA ← PARA VOLVER.`;
                 }
 
-                // scroll suave
                 const activeOpt = document.querySelector('.option.active');
                 if (activeOpt) activeOpt.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
             }
 
-            // navegar a un nodo
             function navigateTo(selectedNode) {
                 if (!selectedNode) return;
-
                 if (selectedNode.type === 'empty') {
                     playClickSound();
                     speakText('OPCIÓN NO VÁLIDA. PRESIONA FLECHA ABAJO PARA VER LAS OPCIONES.');
                     return;
                 }
-
                 announceSelection(selectedNode);
-
                 if (selectedNode.type === 'back' && selectedNode.target) {
                     const targetNode = findNodeById(tree, selectedNode.target);
                     if (targetNode) {
                         const path = findPathToNode(tree, targetNode.id);
-                        if (path.length) {
-                            historyStack = path.slice(0, -1);
-                            currentNode = targetNode;
-                            selectedIndex = 0;
-                        } else {
-                            historyStack = [];
-                            currentNode = targetNode;
-                            selectedIndex = 0;
-                        }
-                    } else {
-                        resetToRoot();
-                    }
+                        historyStack = path.length ? path.slice(0, -1) : [];
+                        currentNode = targetNode;
+                        selectedIndex = 0;
+                    } else { resetToRoot(); }
                     render();
-                    if (currentNode.type === 'quiz' && currentNode.question) {
-                        announceQuestionIfNeeded();
-                    }
+                    announceQuestionIfNeeded();
                     return;
                 }
-
                 historyStack.push(currentNode);
                 currentNode = selectedNode;
                 selectedIndex = 0;
                 render();
-                
-                if (currentNode.type === 'quiz' && currentNode.question) {
-                    announceQuestionIfNeeded();
-                }
+                if (currentNode.type === 'quiz' && currentNode.question) announceQuestionIfNeeded();
             }
 
-            function announceNavigation() {
-                const text = getNavigationText();
-                if (text) {
-                    playClickSound();
-                    speakText(text);
-                } else {
-                    playClickSound();
-                }
-            }
-
-            function announceSelection(opt) {
-                const text = getSelectionText(opt);
-                if (text) {
-                    playClickSound();
-                    speakText(text);
-                }
-            }
+            function announceNavigation() { const t = getNavigationText(); playClickSound(); if (t) speakText(t); else playClickSound(); }
+            function announceSelection(opt) { const t = getSelectionText(opt); if (t) { playClickSound(); speakText(t); } }
 
             function resetToRoot() {
                 playClickSound();
@@ -825,118 +748,59 @@
                 speakText('INICIO. ' + (currentNode.description || '').toUpperCase());
             }
 
-            // teclado
             function handleKeyDown(e) {
                 if (e.key.startsWith('Arrow') || e.key === 'Enter') e.preventDefault();
-
                 const options = (currentNode.options && Array.isArray(currentNode.options)) ? currentNode.options : [];
-                const oldIndex = selectedIndex;
-
+                const old = selectedIndex;
                 switch (e.key) {
                     case 'ArrowUp':
-                        if (options.length > 0) {
-                            selectedIndex = (selectedIndex - 1 + options.length) % options.length;
-                            if (selectedIndex !== oldIndex) {
-                                render();
-                                announceNavigation();
-                            }
-                        }
+                        if (options.length) { selectedIndex = (selectedIndex - 1 + options.length) % options.length; if (selectedIndex !== old) { render(); announceNavigation(); } }
                         break;
                     case 'ArrowDown':
-                        if (options.length > 0) {
-                            selectedIndex = (selectedIndex + 1) % options.length;
-                            if (selectedIndex !== oldIndex) {
-                                render();
-                                announceNavigation();
-                            }
-                        }
+                        if (options.length) { selectedIndex = (selectedIndex + 1) % options.length; if (selectedIndex !== old) { render(); announceNavigation(); } }
                         break;
                     case 'ArrowLeft':
-                        if (historyStack.length > 0) {
+                        if (historyStack.length) {
                             const prev = historyStack.pop();
                             currentNode = prev;
                             selectedIndex = 0;
                             render();
                             playClickSound();
                             speakText((currentNode.name || 'ANTERIOR').toUpperCase());
-                            if (currentNode.type === 'quiz' && currentNode.question) {
-                                announceQuestionIfNeeded();
-                            }
-                        } else {
-                            feedbackEl.innerText = '🌍 YA ESTÁS EN EL INICIO.';
-                            playClickSound();
-                            speakText('YA ESTÁS EN EL INICIO');
-                        }
+                            if (currentNode.type === 'quiz' && currentNode.question) announceQuestionIfNeeded();
+                        } else { feedbackEl.innerText = '🌍 YA ESTÁS EN EL INICIO.'; playClickSound(); speakText('YA ESTÁS EN EL INICIO'); }
                         break;
                     case 'ArrowRight':
-                        if (options.length > 0 && selectedIndex < options.length) {
-                            navigateTo(options[selectedIndex]);
-                        } else {
-                            feedbackEl.innerText = '🔇 NO HAY OPCIÓN. ← PARA RETROCEDER.';
-                            playClickSound();
-                            speakText('NO HAY OPCIÓN DISPONIBLE');
-                        }
-                        break;
                     case 'Enter':
-                        if (options.length > 0 && selectedIndex < options.length) {
-                            navigateTo(options[selectedIndex]);
-                        }
+                        if (options.length && selectedIndex < options.length) navigateTo(options[selectedIndex]);
+                        else { feedbackEl.innerText = '🔇 NO HAY OPCIÓN. ← PARA RETROCEDER.'; playClickSound(); speakText('NO HAY OPCIÓN DISPONIBLE'); }
                         break;
                 }
             }
 
-            // eventos
             window.addEventListener('keydown', handleKeyDown);
-            
-            resetBtn.addEventListener('click', () => {
-                resetToRoot();
-                appContainer.focus();
-            });
-
+            resetBtn.addEventListener('click', () => { resetToRoot(); appContainer.focus(); });
             repeatBtn.addEventListener('click', () => {
                 let text = '';
-                if (currentNode.type === 'quiz' && currentNode.question) {
-                    text = currentNode.question + '. ' + (getNavigationText() || '');
-                } else {
-                    text = getNavigationText() || currentNode.description || '';
-                }
-                if (text) {
-                    playClickSound();
-                    speakText(text);
-                } else {
-                    playClickSound();
-                }
+                if (currentNode.type === 'quiz' && currentNode.question) text = currentNode.question + '. ' + (getNavigationText() || '');
+                else text = getNavigationText() || currentNode.description || '';
+                if (text) { playClickSound(); speakText(text); } else playClickSound();
             });
-
             muteBtn.addEventListener('click', () => {
                 speechEnabled = !speechEnabled;
                 muteBtn.innerText = speechEnabled ? '🔇 SILENCIAR' : '🔊 ACTIVAR';
                 playClickSound();
-                if (speechEnabled) {
-                    speakText('VOZ ACTIVADA');
-                } else {
-                    if (speech) speech.cancel();
-                }
+                if (speechEnabled) speakText('VOZ ACTIVADA'); else if (speech) speech.cancel();
             });
 
             appContainer.setAttribute('tabindex', '0');
             appContainer.focus();
-
-            document.body.addEventListener('keydown', (e) => {
-                if (e.key.startsWith('Arrow') || e.key === 'Enter') e.preventDefault();
-            }, { passive: false });
-
+            document.body.addEventListener('keydown', (e) => { if (e.key.startsWith('Arrow') || e.key === 'Enter') e.preventDefault(); }, { passive: false });
             appContainer.addEventListener('click', () => appContainer.focus());
-
             resetToRoot();
-
             document.body.addEventListener('click', function initAudio() {
-                if (!audioCtx) {
-                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                }
-                if (audioCtx.state === 'suspended') {
-                    audioCtx.resume();
-                }
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
             }, { once: true });
         })();
     </script>
